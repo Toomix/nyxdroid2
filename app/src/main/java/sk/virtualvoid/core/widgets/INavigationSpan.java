@@ -5,7 +5,8 @@ public interface INavigationSpan {
 
     Long getDiscussionId();
     Long getPostId();
-
+    Long getMailId();
     boolean isImage();
     boolean isNavigation();
+    boolean isMailMessage();
 }

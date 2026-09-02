@@ -111,7 +111,7 @@ public abstract class BaseActivity extends AppCompatActivity implements INavigat
     // ===================================================================================
 
     @Override
-    public boolean onNavigationRequested(NavigationType navigationType, String url, Long discussionId, Long writeupId) {
+    public boolean onNavigationRequested(NavigationType navigationType, String url, Long discussionId, Long writeupId, Long mailId) {
         // pre zachovanie historie pohybu po aktivitach, nefinishujem aktualnu
 
         if (navigationType == NavigationType.TOPIC) {
@@ -125,6 +125,10 @@ public abstract class BaseActivity extends AppCompatActivity implements INavigat
 //		if (navigationType == NavigationType.MARKET) {
 //			NavigationHandler.startNavigateMarket(this, AdvertActivity.class, discussionId);
 //		}
+
+        if (navigationType == NavigationType.MAIL) {
+			NavigationHandler.startNavigateMail(this, MailActivity.class, mailId);
+		}
 
         if (navigationType == NavigationType.IMAGE) {
             try {

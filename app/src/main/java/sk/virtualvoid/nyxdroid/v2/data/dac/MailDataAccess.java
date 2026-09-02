@@ -66,11 +66,11 @@ public class MailDataAccess {
             String baseUrl = "/mail";
 
             if (input.FirstId == null && input.LastId != null) {
-                baseUrl = baseUrl + "?order=older_than&from_id=" + input.LastId;
+                baseUrl = baseUrl + "?order=older_than&from_id=" + (input.LastId + 1);
             }
 
             if (input.FirstId != null && input.LastId == null) {
-                baseUrl = baseUrl + "?order=newer_than&from_id=" + input.FirstId;
+                baseUrl = baseUrl + "?order=newer_than&from_id=" + (input.FirstId - 1);
             }
 
             if (input.isFilterUser()) {

@@ -6,5 +6,5 @@ package sk.virtualvoid.nyxdroid.v2.internal;
  *
  */
 public interface INavigationHandler {
-	boolean onNavigationRequested(NavigationType navigationType, String url, Long discussionId, Long writeupId);
+	boolean onNavigationRequested(NavigationType navigationType, String url, Long discussionId, Long writeupId, Long mailMessageID);
 }

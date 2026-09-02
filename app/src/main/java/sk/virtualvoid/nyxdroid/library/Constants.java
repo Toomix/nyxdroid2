@@ -44,6 +44,7 @@ public class Constants {
     public static final String KEY_ACTIVITY_COUNT = "baseActivityActivityCount";
 
     public static final String REQUEST_MAIL = "mail";
+    public static final String REPLY_TO_MAIL = "{reply m|%s}: ";
     public static final String REQUEST_WRITEUP = "writeup";
     public static final String REQUEST_WRITEUP_DISCUSSION_ID = "writeup_discussion_id";
     public static final String REQUEST_WRITEUP_DISCUSSION_NAME = "writeup_discussion_name";
@@ -75,6 +76,16 @@ public class Constants {
     }
 
     public static String fixAttachmentUrl(String url) {
+        if (url == null) {
+            return "";
+        }
+        if (!url.startsWith(Constants.HTTP) && !url.startsWith(Constants.HTTPS)) {
+            url = String.format("%s%s", Constants.INDEX_WWW, url);
+        }
+        return url;
+    }
+
+    public static String fixMailReplyUrl(String url) {
         if (url == null) {
             return "";
         }

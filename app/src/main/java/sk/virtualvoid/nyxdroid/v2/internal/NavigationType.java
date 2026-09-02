@@ -10,5 +10,6 @@ public enum NavigationType {
 	TOPIC,
 	EVENT,
 	MARKET,
-	IMAGE
+	IMAGE,
+	MAIL
 }
