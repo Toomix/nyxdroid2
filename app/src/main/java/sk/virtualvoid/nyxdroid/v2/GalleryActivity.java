@@ -249,6 +249,7 @@ public class GalleryActivity extends BaseActivity implements View.OnLongClickLis
 			Glide.with(context)
 					.load(url)
 					.fitCenter()
+					.dontAnimate()
 					.placeholder(placeholder)
 					.into(photoView);
 
