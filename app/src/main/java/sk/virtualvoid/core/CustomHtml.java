@@ -21,11 +21,15 @@ import java.util.regex.Pattern;
  * @author Juraj
  */
 public class CustomHtml {
+    private static final Pattern VIDEO_TAG_PATTERN = Pattern.compile("<video\\b[^>]*>.*?</video>", Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+    private static final Pattern SRC_ATTRIBUTE_PATTERN = Pattern.compile("\\bsrc\\s*=\\s*['\"]?([^'\"\\s>]+)", Pattern.CASE_INSENSITIVE);
+
     public static Spanned fromHtml(String source) {
         return fromHtml(source, null);
     }
 
     public static Spanned fromHtml(String source, Html.ImageGetter imageGetter) {
+        source = replaceVideoTags(source);
         Spanned spanned = android.text.Html.fromHtml(source, imageGetter, null);
         return correctLinkPaths(spanned);
     }
@@ -75,6 +79,32 @@ public class CustomHtml {
             ((Spannable) input).setSpan(replacement, start, end, flags);
         }
         return input;
+    }
+
+    private static String replaceVideoTags(String source) {
+        if (source == null) {
+            return "";
+        }
+
+        Matcher matcher = VIDEO_TAG_PATTERN.matcher(source);
+        StringBuffer result = new StringBuffer();
+        while (matcher.find()) {
+            String videoTag = matcher.group();
+            String videoUrl = findSrc(videoTag);
+            String replacement = videoUrl != null && !videoUrl.isEmpty()
+                    ? String.format("<a href=\"%s\">[video]</a>", videoUrl.replace("\"", "%22"))
+                    : "[video]";
+
+            matcher.appendReplacement(result, Matcher.quoteReplacement(replacement));
+        }
+        matcher.appendTail(result);
+
+        return result.toString();
+    }
+
+    private static String findSrc(String html) {
+        Matcher matcher = SRC_ATTRIBUTE_PATTERN.matcher(html);
+        return matcher.find() ? matcher.group(1) : null;
     }
 
     private static boolean createCustomUrlSpan(Spanned input, URLSpan span, int start, int end, int flags, Pattern ptr) {
