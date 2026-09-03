@@ -34,6 +34,7 @@ public class CustomHtml {
         Pattern discussionPostPtr = Pattern.compile(".*/discussion/(\\d+)/id/(\\d+)", Pattern.CASE_INSENSITIVE);
         Pattern discussionPtr = Pattern.compile(".*/discussion/(\\d+)", Pattern.CASE_INSENSITIVE);
         Pattern attachmentPtr = Pattern.compile(".*(original).(\\w{3})(\\?name=).*", Pattern.CASE_INSENSITIVE);
+        Pattern mailReplyPtr = Pattern.compile(".*/mail/id/(\\d+)", Pattern.CASE_INSENSITIVE);
 
         URLSpan[] urlSpans = input.getSpans(0, input.length(), URLSpan.class);
         for (URLSpan span : urlSpans) {
@@ -41,11 +42,11 @@ public class CustomHtml {
             int end = input.getSpanEnd(span);
             int flags = input.getSpanFlags(span);
 
-            if (createCustomUrlSpan(input, span, start, end, flags, discussionPostPtr)) {
+            if (createCustomAttachmentUrlSpan(input, span, start, end, flags, attachmentPtr)) {
                 Log.i(Constants.TAG, String.format("correctLinkPaths: ok: %s", span.getURL()));
             } else if (createCustomUrlSpan(input, span, start, end, flags, discussionPtr)) {
                 Log.i(Constants.TAG, String.format("correctLinkPaths: ok: %s", span.getURL()));
-            } else if (createCustomAttachmentUrlSpan(input, span, start, end, flags, attachmentPtr)) {
+            } else if (createCustomMailReplyUrlSpan(input, span, start, end, flags, mailReplyPtr)) {
                 Log.i(Constants.TAG, String.format("correctLinkPaths: ok: %s", span.getURL()));
             } else {
                 String resolvedUrl = createGenericUrlSpan(input, span, start, end, flags);
@@ -69,7 +70,7 @@ public class CustomHtml {
                 continue;
             }
 
-            CustomUrlSpan replacement = new CustomUrlSpan(Constants.fixAttachmentUrl(source), true);
+            CustomUrlSpan replacement = new CustomUrlSpan(Constants.fixAttachmentUrl(source), true, false, -1);
 
             ((Spannable) input).setSpan(replacement, start, end, flags);
         }
@@ -105,6 +106,22 @@ public class CustomHtml {
             ((Spannable) input).removeSpan(span);
 
             CustomUrlSpan replacement = new CustomUrlSpan(Constants.fixAttachmentUrl(span.getURL()));
+
+            ((Spannable) input).setSpan(replacement, start, end, flags);
+
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean createCustomMailReplyUrlSpan(Spanned input, URLSpan span, int start, int end, int flags, Pattern ptr) {
+        Matcher matcher = ptr.matcher(span.getURL());
+        if (matcher.matches()) {
+            ((Spannable) input).removeSpan(span);
+
+            long mailId = Long.parseLong(matcher.group(1));
+
+            CustomUrlSpan replacement = new CustomUrlSpan(Constants.fixMailReplyUrl(span.getURL()), false, true, mailId);
 
             ((Spannable) input).setSpan(replacement, start, end, flags);
 

@@ -19,9 +19,11 @@ public class CustomUrlSpan extends ClickableSpan implements INavigationSpan {
     private String url;
     private Long discussionId;
     private Long postId;
+    private Long mailId;
 
     private boolean isImage;
     private boolean isNavigation;
+    private boolean isMail;
 
     public CustomUrlSpan(String url) {
         this.url = url;
@@ -35,17 +37,21 @@ public class CustomUrlSpan extends ClickableSpan implements INavigationSpan {
         this.isNavigation = true;
     }
 
-    public CustomUrlSpan(String url, boolean isImage) {
+    public CustomUrlSpan(String url, boolean isImage, boolean isMail, long mailId) {
         this.url = url;
         this.isImage = isImage;
+        this.isMail = isMail;
+        this.mailId = mailId;
     }
+
 
     @Override
     public void updateDrawState(@NonNull TextPaint ds) {
         super.updateDrawState(ds);
 
         // zvyraznenie odpovede na prispevok, lepsi hack ma uz nenapadol, sorry, -vv-
-        if (discussionId != null && postId != null) {
+        // me to taky lepe nenapadlo, Toomix
+        if ((discussionId != null && postId != null) || mailId != null) {
             ds.setTypeface(Typeface.DEFAULT_BOLD);
         }
     }
@@ -74,6 +80,10 @@ public class CustomUrlSpan extends ClickableSpan implements INavigationSpan {
         return postId;
     }
 
+    public Long getMailId() {
+        return mailId;
+    }
+
     @Override
     public boolean isImage() {
         return isImage;
@@ -82,5 +92,9 @@ public class CustomUrlSpan extends ClickableSpan implements INavigationSpan {
     @Override
     public boolean isNavigation() {
         return isNavigation;
+    }
+
+    public boolean isMailMessage() {
+        return isMail;
     }
 }

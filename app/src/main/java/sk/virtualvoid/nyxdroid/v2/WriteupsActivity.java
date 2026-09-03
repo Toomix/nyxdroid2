@@ -482,7 +482,7 @@ public class WriteupsActivity extends BaseActivity implements IVotingHandler, IP
     }
 
     @Override
-    public boolean onNavigationRequested(NavigationType navigationType, String url, Long discussionId, Long writeupId) {
+    public boolean onNavigationRequested(NavigationType navigationType, String url, Long discussionId, Long writeupId, Long mailId) {
         // completny override z base activity !
         if (navigationType == NavigationType.NONE || (discussionId == null && writeupId == null && url == null)) {
             return false;

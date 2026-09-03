@@ -14,7 +14,6 @@ public class Mail extends BaseComposePoco implements Parcelable {
 	public boolean IsReminded;
 	public UserActivity Location;
 	public boolean ReplyTo;
-	
 	public Mail() {
 
 	}

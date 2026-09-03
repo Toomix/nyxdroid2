@@ -196,7 +196,7 @@ public class GalleryActivity extends BaseActivity implements View.OnLongClickLis
 	}
 
 	@Override
-	public boolean onNavigationRequested(NavigationType navigationType, String url, Long discussionId, Long writeupId) {
+	public boolean onNavigationRequested(NavigationType navigationType, String url, Long discussionId, Long writeupId, Long mailId) {
 		/* Not needed here */
 		return false;
 	}
@@ -249,6 +249,7 @@ public class GalleryActivity extends BaseActivity implements View.OnLongClickLis
 			Glide.with(context)
 					.load(url)
 					.fitCenter()
+					.dontAnimate()
 					.placeholder(placeholder)
 					.into(photoView);
 

@@ -18,6 +18,7 @@ import sk.virtualvoid.nyxdroid.v2.data.adapters.ConversationAdapter;
 import sk.virtualvoid.nyxdroid.v2.data.adapters.MailAdapter;
 import sk.virtualvoid.nyxdroid.v2.data.dac.MailDataAccess;
 import sk.virtualvoid.nyxdroid.v2.data.query.MailQuery;
+import sk.virtualvoid.nyxdroid.v2.internal.NavigationType;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 import android.content.BroadcastReceiver;
 import android.content.ClipData;
@@ -188,7 +189,13 @@ public class MailActivity extends BaseActivity implements ISecondBaseMenu {
 		refreshReceiverEnabled = true;
 		registerReceiver(refreshReceiver, new IntentFilter(Constants.REFRESH_MAIL_INTENT_FILTER));
 
-		load(true, null, null, null);
+		Long mailId = null;
+		Bundle extras = getIntent().getExtras();
+		if (extras != null && extras.containsKey(Constants.KEY_ID)) {
+			mailId = extras.getLong(Constants.KEY_ID);
+		}
+
+		load(true, mailId, null, null);
 	}
 
 	@Override
@@ -258,6 +265,15 @@ public class MailActivity extends BaseActivity implements ISecondBaseMenu {
 			return load(true, null, null, null);
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public boolean onNavigationRequested(NavigationType navigationType, String url, Long discussionId, Long writeupId, Long mailId) {
+		if (navigationType == NavigationType.MAIL && mailId != null) {
+			return load(true, mailId, null, null);
+		}
+
+		return super.onNavigationRequested(navigationType, url, discussionId, writeupId, mailId);
 	}
 
 	@Override

@@ -73,7 +73,7 @@ public class SettingsActivity extends BaseActivity {
 	}
 
 	@Override
-	public boolean onNavigationRequested(NavigationType navigationType, String url, Long discussionId, Long writeupId) {
+	public boolean onNavigationRequested(NavigationType navigationType, String url, Long discussionId, Long writeupId, Long mailId) {
 		/* Not needed here */
 		return false;
 	}

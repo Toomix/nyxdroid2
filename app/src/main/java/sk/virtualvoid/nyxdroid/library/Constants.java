@@ -85,6 +85,16 @@ public class Constants {
         return url;
     }
 
+    public static String fixMailReplyUrl(String url) {
+        if (url == null) {
+            return "";
+        }
+        if (!url.startsWith(Constants.HTTP) && !url.startsWith(Constants.HTTPS)) {
+            url = String.format("%s%s", Constants.INDEX_WWW, url);
+        }
+        return url;
+    }
+
     public static class ImageLoader {
         public static final String FILE_PROTOCOL = "file://";
 

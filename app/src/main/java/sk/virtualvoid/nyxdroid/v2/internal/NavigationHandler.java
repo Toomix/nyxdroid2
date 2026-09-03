@@ -41,6 +41,9 @@ public class NavigationHandler {
             } else if (navigationSpan.isNavigation()) {
                 boolean success = doNavigateTopic();
                 Log.d(Constants.TAG, "NavigationHandler - topic navigation succeeded: " + success);
+            } else if (navigationSpan.isMailMessage()) {
+                boolean success = doNavigateMail();
+                Log.d(Constants.TAG, "NavigationHandler - mail navigation succeeded: " + success);
             } else {
                 String url = navigationSpan.getUrl();
 
@@ -63,13 +66,18 @@ public class NavigationHandler {
             writeupId = ((InformedViewHolder) parentTag).getId();
         }
 
-        result = ((INavigationHandler) context).onNavigationRequested(NavigationType.IMAGE, /*fullUrl*/navigationSpan.getUrl(), null, writeupId);
+        result = ((INavigationHandler) context).onNavigationRequested(NavigationType.IMAGE, /*fullUrl*/navigationSpan.getUrl(), null, writeupId, null);
 
         return result;
     }
 
     private boolean doNavigateTopic() {
-        boolean result = ((INavigationHandler) context).onNavigationRequested(NavigationType.TOPIC, null, navigationSpan.getDiscussionId(), navigationSpan.getPostId());
+        boolean result = ((INavigationHandler) context).onNavigationRequested(NavigationType.TOPIC, null, navigationSpan.getDiscussionId(), navigationSpan.getPostId(), null);
+        return result;
+    }
+
+    private boolean doNavigateMail() {
+        boolean result = ((INavigationHandler) context).onNavigationRequested(NavigationType.MAIL, null, null, null, navigationSpan.getMailId());
         return result;
     }
 
@@ -81,6 +89,14 @@ public class NavigationHandler {
         if (writeupId != null) {
             intent.putExtra(Constants.KEY_WU_ID, writeupId);
         }
+
+        context.startActivity(intent);
+        context.overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+    }
+
+    public static void startNavigateMail(Activity context, Class<?> mailActivityClass, Long mailId) {
+        Intent intent = new Intent(context, mailActivityClass);
+        intent.putExtra(Constants.KEY_ID, mailId);
 
         context.startActivity(intent);
         context.overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
