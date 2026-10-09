@@ -7,11 +7,11 @@ def pass = System.getenv("RELEASE_PASS")
 
 def versionMajor = 2
 def versionMinor = 1
-def versionPatch = 459
+def versionPatch = 464
 
 android {
     defaultConfig {
-        applicationId "sk.virtualvoid.nyxdroid.v2"
+        applicationId "sk.virtualvoid.nyxdroid.v2.beta"
         minSdkVersion 21
         compileSdk 31
         targetSdkVersion 31

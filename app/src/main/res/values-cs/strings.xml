@@ -1,8 +1,8 @@
 <resources>
 
-    <string name="app_name">nyxdroid</string>
+    <string name="app_name">JNyxdroid</string>
     <string name="app_version">api reboot-beta</string>
-    <string name="app_name_and_version">nyxdroid </string>
+    <string name="app_name_and_version">JNyxdroid </string>
     <string name="general_error_occured">Vyskytla se chyba, zkuste to, prosím, později. Pokud se to opakuje, kontaktujte autora aplikace.</string>
     <string name="authorization_activity_nick">ID :</string>
     <string name="authorization_activity_code">Kód :</string>
@@ -93,6 +93,9 @@
     <string name="always_display">Vždy zobrazovat</string>
     <string name="read_bookmarks">Přečtené sledované diskuze</string>
     <string name="read_history">Přečtené v historii</string>
+    <string name="history_show_unread">Zobrazit jen nepřečtené diskuze</string>
+    <string name="history_show_all">Zobrazit celou historii</string>
+    <string name="bookmarks_show_all">Zobrazit všechny sledované diskuze</string>
     <string name="app_name_events">události</string>
     <string name="app_name_event_detail">...</string>
     <string name="event_details">Detaily</string>
@@ -148,6 +151,13 @@
     <string name="timeformat_today" formatted="false">dnes %02d:%02d:%02d</string>
     <string name="timeformat_normal" formatted="false">%d.%d.%d %02d:%02d:%02d</string>
     <string name="ge_openbrowser">Otevřít</string>
+    <string name="gallery_download">Stáhnout obrázek</string>
+    <string name="gallery_download_saved">Obrázek uložen do: %1$s</string>
+    <string name="gallery_download_failed">Obrázek se nepodařilo uložit.</string>
+    <string name="gallery_download_permission_denied">Pro uložení obrázku povolte přístup k úložišti.</string>
+    <string name="gallery_loading_more">Načítání dalších obrázků...</string>
+    <string name="gallery_load_more_failed">Další obrázky se nepodařilo načíst.</string>
+    <string name="gallery_no_more_images">Žádné další obrázky.</string>
     <string name="unread_appearance">Styl nepřečtených příspěvků</string>
     <string name="choose_color_or_standard_settings">Vyberte si barvu, nebo standardní nastavení</string>
     <string name="cant_open_it">Neumím to otevřít.</string>

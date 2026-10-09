@@ -1,7 +1,7 @@
 {
   "project_info": {
     "project_number": "156568407181",
-    "project_id": "nyxdroidv2",
+    "project_id": "nyxdroidv2beta",
     "storage_bucket": "nyxdroidv2.appspot.com"
   },
   "client": [
@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:156568407181:android:6e6ec48036e53de7c366c4",
         "android_client_info": {
-          "package_name": "sk.virtualvoid.nyxdroid.v2"
+          "package_name": "sk.virtualvoid.nyxdroid.v2.beta"
         }
       },
       "oauth_client": [

@@ -35,8 +35,8 @@ public class CustomHtml {
     }
 
     public static Spanned correctLinkPaths(Spanned input) {
-        Pattern discussionPostPtr = Pattern.compile(".*/discussion/(\\d+)/id/(\\d+)", Pattern.CASE_INSENSITIVE);
-        Pattern discussionPtr = Pattern.compile(".*/discussion/(\\d+)", Pattern.CASE_INSENSITIVE);
+        Pattern discussionPostPtr = Pattern.compile(".*/discussion/(\\d+)/id/(\\d+)(?:[?#].*)?", Pattern.CASE_INSENSITIVE);
+        Pattern discussionPtr = Pattern.compile(".*/discussion/(\\d+)(?:[?#].*)?", Pattern.CASE_INSENSITIVE);
         Pattern attachmentPtr = Pattern.compile(".*(original)\\.(jpg|jpeg|png|gif|webp)(\\?.*)?$", Pattern.CASE_INSENSITIVE);
         Pattern mailReplyPtr = Pattern.compile(".*/mail/id/(\\d+)", Pattern.CASE_INSENSITIVE);
 
@@ -47,6 +47,8 @@ public class CustomHtml {
             int flags = input.getSpanFlags(span);
 
             if (createCustomAttachmentUrlSpan(input, span, start, end, flags, attachmentPtr)) {
+                Log.i(Constants.TAG, String.format("correctLinkPaths: ok: %s", span.getURL()));
+            } else if (createCustomUrlSpan(input, span, start, end, flags, discussionPostPtr)) {
                 Log.i(Constants.TAG, String.format("correctLinkPaths: ok: %s", span.getURL()));
             } else if (createCustomUrlSpan(input, span, start, end, flags, discussionPtr)) {
                 Log.i(Constants.TAG, String.format("correctLinkPaths: ok: %s", span.getURL()));
